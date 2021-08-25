@@ -18,14 +18,8 @@ jobs:
           echo "::set-output name=packagename::$PACKAGENAME"
       - name: Run `repository_dispatch` on updated repo, to trigger tagbot
         run: |
-          MY_PAT=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S
-          echo "${MY_PAT}"
-          echo "${{ steps.pkg.outputs.packagename }}"
-          echo "${{steps.pkg.outputs.packagename}}"
           echo "${steps.pkg.outputs.packagename}"
-          echo "${{MY_PAT}}"
-          echo "${ MY_PAT }"
           curl -X POST https://api.github.com/repos/kdw503/TestPkg.jl/dispatches \
           -H 'Accept: application/vnd.github.everest-preview+json' \
-          -H 'Authorization: token ${TAGBOT_PAT}' \
+          -H "Authorization: token ${TAGBOT_PAT}" \
           --data '{"event_type": "TriggerTagBot_TestPkg", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'" }}'
