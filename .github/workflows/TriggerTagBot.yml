@@ -21,6 +21,8 @@ jobs:
           MY_PAT=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S
           echo "${MY_PAT}"
           echo "${{ steps.pkg.outputs.packagename }}"
+          echo "${{steps.pkg.outputs.packagename}}"
+          echo "${ MY_PAT }"
           curl -X POST https://api.github.com/repos/kdw503/TestPkg.jl/dispatches \
           -H 'Accept: application/vnd.github.everest-preview+json' \
           -H 'Authorization: token ${TAGBOT_PAT}' \
