@@ -22,6 +22,7 @@ jobs:
           echo "${MY_PAT}"
           echo "${{ steps.pkg.outputs.packagename }}"
           echo "${{steps.pkg.outputs.packagename}}"
+          echo "${steps.pkg.outputs.packagename}"
           echo "${ MY_PAT }"
           curl -X POST https://api.github.com/repos/kdw503/TestPkg.jl/dispatches \
           -H 'Accept: application/vnd.github.everest-preview+json' \
