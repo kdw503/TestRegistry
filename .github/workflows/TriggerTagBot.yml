@@ -20,5 +20,5 @@ jobs:
         run: |
           curl -X POST https://api.github.com/kdw503/${{ steps.pkg.outputs.packagename }}.jl/dispatches \
           -H 'Accept: application/vnd.github.everest-preview+json' \
-          -u ${{ secrets.TAGBOT_PAT }} \
+          -u ${{ secrets.DOCUMENTER_KEY }} \
           --data '{"event_type": "TriggerTagBot_${{ steps.pkg.outputs.packagename }}", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'" }}'
