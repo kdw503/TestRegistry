@@ -20,6 +20,6 @@ jobs:
         run: |
           curl -X POST https://api.github.com/repos/kdw503/TestPkg.jl/dispatches \
           -H 'Accept: application/vnd.github.everest-preview+json' \
-          -u  kdw503:${{ TAGBOT_PAT }} \
+          -u  kdw503:${TAGBOT_PAT} \
           --data '{"event_type": "TriggerTagBot_TestPkg", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'" }}'
           # -H "Authorization: token ${TAGBOT_PAT}" \
