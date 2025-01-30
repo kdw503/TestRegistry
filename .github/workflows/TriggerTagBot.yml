@@ -20,7 +20,7 @@ jobs:
           echo "'"$GITHUB_REPOSITORY"'"
       - name: Run `repository_dispatch` on updated repo, to trigger tagbot
         run: |
-          echo "$steps.pkg.outputs.packagename"
+          echo "${steps.pkg.outputs.packagename}"
           curl -X POST https://api.github.com/repos/HolyLab/${{ steps.pkg.outputs.packagename }}.jl/dispatches \
           -H 'Accept: application/vnd.github.everest-preview+json' \
           -u ${{ secrets.TAGBOT_PAT }} \
