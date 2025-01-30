@@ -31,7 +31,7 @@ jobs:
           fi
           curl --http1.1 -X POST https://api.github.com/repos/kdw503/${packagename}.jl/dispatches \
           -H 'Accept: application/vnd.github.everest-preview+json' \
-          -H "Authorization: Bearer $TAGBOT_PAT" \
+          -H "Authorization: Bearer \"$TAGBOT_PAT\"" \
           -H "Content-Type: application/json" \
           --verbose \
           --data '{"event_type": "TriggerTagBot_TestPkg", "client_payload": { "repository": "kdw503/TestRegistry" }}'
