@@ -19,6 +19,8 @@ jobs:
           echo "Package name is: $PACKAGENAME"
           echo "packagename=$PACKAGENAME" >> "$GITHUB_ENV"
       - name: Run `repository_dispatch` on updated repo, to trigger tagbot
+        env:
+          TAGBOT_PAT: ${{ secrets.TAGBOT_PAT }}
         run: |
           if [ -z "$packagename" ]; then
             echo "Error: Package name is empty"
@@ -26,9 +28,9 @@ jobs:
           fi
           curl -X POST https://api.github.com/repos/kdw503/${packagename}.jl/dispatches \
           -H 'Accept: application/vnd.github.everest-preview+json' \
-          -H "Authorization: token ${{secrets.TAGBOT_PAT}}" \
+          -H "Authorization: token $TAGBOT_PAT" \
           -H "Content-Type: application/json" \
-          --data '{"event_type": "TriggerTagBot_TestPkg", "client_payload": { "repository": "kdw503/TestRegistry" }}'
+          --data "{\"event_type\": \"TriggerTagBot_TestPkg\", \"client_payload\": { \"repository\": \"$GITHUB_REPOSITORY\" }}"
           #-u ${{secrets.TAGBOT_PAT}} \
           #--data "{\"event_type\": \"TriggerTagBot_TestPkg\", \"client_payload\": { \"repository\": \"$GITHUB_REPOSITORY\" }}"
           # -H "Content-Type: application/json" \
