@@ -17,7 +17,8 @@ jobs:
           PACKAGENAME=$(git diff HEAD^ --stat | grep /Versions.toml | cut -d/ -f2 | uniq)
           echo "::set-output name=packagename::$PACKAGENAME"
           echo "${{ steps.pkg.outputs.packagename }}"
-          echo "${{PACKAGENAME}}"
+          echo "$PACKAGENAME"
+          echo "$GITHUB_REPOSITORY"
       - name: Run `repository_dispatch` on updated repo, to trigger tagbot
         run: |
           curl -X POST https://api.github.com/repos/HolyLab/${{ steps.pkg.outputs.packagename }}.jl/dispatches \
