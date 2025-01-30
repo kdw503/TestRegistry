@@ -1,4 +1,3 @@
-
 name: TriggerTagBot
 on:
   push:
@@ -17,12 +16,16 @@ jobs:
         run: |
           PACKAGENAME=$(git diff HEAD^ --stat | grep /Versions.toml | cut -d/ -f2 | uniq)
           echo "::set-output name=packagename::$PACKAGENAME"
+          echo "${{ steps.pkg.outputs.packagename }}"
+          echo "${{$GITHUB_REPOSITORY}}"
+          echo "${{PACKAGENAME}}"
       - name: Run `repository_dispatch` on updated repo, to trigger tagbot
         run: |
-          curl -X POST https://api.github.com/repos/kdw503/TestPkg.jl/dispatches \
-          -H 'Accept: application/vnd.github.v3+json' \
-          -u ${TAGBOT_PAT} \
-          --data '{"event_type": "TriggerTagBot_TestPkg", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'" }}'
+          curl -X POST https://api.github.com/repos/HolyLab/${{ steps.pkg.outputs.packagename }}.jl/dispatches \
+          -H 'Accept: application/vnd.github.everest-preview+json' \
+          -u ${{ secrets.TAGBOT_PAT }} \
+          --data '{"event_type": "TriggerTagBot_${{ steps.pkg.outputs.packagename }}", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'" }}'
+          # --data '{"event_type": "TriggerTagBot_TestPkg", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'" }}'
           # -H "Authorization: token ${TAGBOT_PAT}" \ Authorization fail
           # -H "Authorization: token actual_token" \ Authorization succeeded and one time repositery_dispatch is triggered
 
