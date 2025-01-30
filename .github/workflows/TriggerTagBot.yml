@@ -16,15 +16,22 @@ jobs:
         run: |
           PACKAGENAME=$(git diff HEAD^ --stat | grep /Versions.toml | cut -d/ -f2 | uniq)
           echo "::set-output name=packagename::$PACKAGENAME"
-          echo "$PACKAGENAME"
-          echo "'"$GITHUB_REPOSITORY"'"
+          echo "Package name is: $PACKAGENAME"
+          echo "packagename=$PACKAGENAME" >> "$GITHUB_ENV"
       - name: Run `repository_dispatch` on updated repo, to trigger tagbot
+        env:
+          TAGBOT_PAT: ${{ secrets.TAGBOT_PAT }}
         run: |
+          if [ -z "$packagename" ]; then
+            echo "Error: Package name is empty"
+            exit 1
+          fi
           echo "${{steps.pkg.outputs.packagename}}"
-          curl -X POST https://api.github.com/repos/HolyLab/${{ steps.pkg.outputs.packagename }}.jl/dispatches \
+          curl -X POST https://api.github.com/repos/HolyLab/${packagename}}.jl/dispatches \
           -H 'Accept: application/vnd.github.everest-preview+json' \
-          -u ${{ secrets.TAGBOT_PAT }} \
-          --data '{"event_type": "TriggerTagBot_${{ steps.pkg.outputs.packagename }}", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'" }}'
+          -H "Authorization: token $TAGBOT_PAT" \
+          -H "Content-Type: application/json" \
+          --data "{\"event_type\": \"TriggerTagBot_${packagename}\", \"client_payload\": { \"repository\": \"$GITHUB_REPOSITORY\" }}"
           # --data '{"event_type": "TriggerTagBot_TestPkg", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'" }}'
           # -H "Authorization: token ${TAGBOT_PAT}" \ Authorization fail
           # -H "Authorization: token actual_token" \ Authorization succeeded and one time repositery_dispatch is triggered
