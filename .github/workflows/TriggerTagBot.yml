@@ -29,7 +29,7 @@ jobs:
             echo "Error: Package name is empty"
             exit 1
           fi
-          curl --http1.1 POST https://api.github.com/repos/kdw503/${packagename}.jl/dispatches \
+          curl POST https://api.github.com/repos/kdw503/${packagename}.jl/dispatches \
           -H 'Accept: application/vnd.github.everest-preview+json' \
           -H "Authorization: Bearer $TAGBOT_PAT" \
           -H "Content-Type: application/json" \
