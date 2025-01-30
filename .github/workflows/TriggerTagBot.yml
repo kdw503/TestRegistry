@@ -33,7 +33,7 @@ jobs:
           -H 'Accept: application/vnd.github.everest-preview+json' \
           -H "Authorization: Bearer $TAGBOT_PAT" \
           -H "Content-Type: application/json" \
-          --verbose
+          --verbose \
           --data "{\"event_type\": \"TriggerTagBot_TestPkg\", \"client_payload\": { \"repository\": \"$GITHUB_REPOSITORY\" }}"
           #-u ${{secrets.TAGBOT_PAT}} \
           #--data "{\"event_type\": \"TriggerTagBot_TestPkg\", \"client_payload\": { \"repository\": \"$GITHUB_REPOSITORY\" }}"
