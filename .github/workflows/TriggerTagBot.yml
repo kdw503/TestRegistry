@@ -28,8 +28,8 @@ jobs:
           -H 'Accept: application/vnd.github.everest-preview+json' \
           -u ${{secrets.TAGBOT_PAT}} \
           -H "Content-Type: application/json" \
-          #--data "{\"event_type\": \"TriggerTagBot_${packagename}\", \"client_payload\": { \"repository\": \"$GITHUB_REPOSITORY\" }}"
           --data '{"event_type": "TriggerTagBot_TestPkg", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'" }}'
+          #--data "{\"event_type\": \"TriggerTagBot_${packagename}\", \"client_payload\": { \"repository\": \"$GITHUB_REPOSITORY\" }}"
           # -H "Authorization: token ${TAGBOT_PAT}" \ Authorization fail
           # -H "Authorization: token actual_token" \ Authorization succeeded and one time repositery_dispatch is triggered
 
