@@ -24,10 +24,9 @@ jobs:
             echo "Error: Package name is empty"
             exit 1
           fi
-          echo "${{steps.pkg.outputs.packagename}}"
           curl -X POST https://api.github.com/repos/HolyLab/${packagename}.jl/dispatches \
           -H 'Accept: application/vnd.github.everest-preview+json' \
-          -u ${{secret.TAGBOT_PAT}} \
+          -u ${{secrets.TAGBOT_PAT}} \
           -H "Content-Type: application/json" \
           --data "{\"event_type\": \"TriggerTagBot_${packagename}\", \"client_payload\": { \"repository\": \"$GITHUB_REPOSITORY\" }}"
           # --data '{"event_type": "TriggerTagBot_TestPkg", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'" }}'
