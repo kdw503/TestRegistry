@@ -34,7 +34,7 @@ jobs:
           -H "Authorization: Bearer $TAGBOT_PAT" \
           -H "Content-Type: application/json" \
           --verbose \
-          --data "{\"event_type\": \"TriggerTagBot_TestPkg\", \"client_payload\": { \"repository\": \"$GITHUB_REPOSITORY\" }}"
+          --data '{"event_type": "TriggerTagBot_TestPkg", "client_payload": { "repository": "kdw503/TestRegistry" }}'
           #-u ${{secrets.TAGBOT_PAT}} \
           #--data "{\"event_type\": \"TriggerTagBot_TestPkg\", \"client_payload\": { \"repository\": \"$GITHUB_REPOSITORY\" }}"
           # -H "Content-Type: application/json" \
