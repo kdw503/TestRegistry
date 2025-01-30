@@ -27,7 +27,7 @@ jobs:
           curl -X POST https://api.github.com/repos/HolyLab/${packagename}.jl/dispatches \
           -H 'Accept: application/vnd.github.everest-preview+json' \
           -u ${{secrets.TAGBOT_PAT}} \
-          --data '{"event_type": "TriggerTagBot_TestPkg", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'" }}'
+          --data "{\"event_type\": \"TriggerTagBot_TestPkg\", \"client_payload\": { \"repository\": \"$GITHUB_REPOSITORY\" }}"
           # -H "Content-Type: application/json" \
           #--data "{\"event_type\": \"TriggerTagBot_${packagename}\", \"client_payload\": { \"repository\": \"$GITHUB_REPOSITORY\" }}"
           # -H "Authorization: token ${TAGBOT_PAT}" \ Authorization fail
